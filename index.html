@@ -1,0 +1,425 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>ISE Project Navigator (Educational Recreation)</title>
+<style>
+*{box-sizing:border-box}
+:root{--lw:260px;--ch:150px;--ph:190px}
+body{margin:0;height:100vh;display:flex;flex-direction:column;font:12px Tahoma,"Segoe UI",Arial,sans-serif;background:#f0f0f0;color:#202020;overflow:hidden;user-select:none}
+button{font:12px Tahoma,Arial,sans-serif}
+#title,#ititle{height:24px;background:#bcd0ea;display:flex;align-items:center;padding:0 0 0 8px;border-bottom:1px solid #6d8bb5;white-space:nowrap}
+#ititle{background:#4a9cb4;color:#fff;justify-content:center;position:relative}
+#tt{flex:1;overflow:hidden}.wb b{display:inline-block;width:28px;text-align:center;font-weight:400}.wb b:last-child,#iclose{background:#c75050;color:#fff;cursor:default}
+#iclose{position:absolute;right:0;top:0;width:36px;height:24px;border:0}
+.mbar{display:flex;border-bottom:1px solid #ccc;height:22px;background:#f0f0f0}
+.mi{position:relative;padding:3px 8px;cursor:default}.mi:hover,.mi.on{background:#cfe0f5;outline:1px solid #8aa9d4}
+.dd{position:absolute;left:0;top:100%;min-width:210px;background:#f7f7f7;border:1px solid #888;box-shadow:2px 2px 4px #0005;z-index:90;padding:2px;color:#202020}
+.di{display:flex;justify-content:space-between;gap:24px;padding:3px 14px 3px 22px;white-space:nowrap}.di:hover{background:#3d7ac0;color:#fff}.di.dis{color:#999;pointer-events:none}.di i{font-style:normal;color:#888}
+.dd hr{border:0;border-top:1px solid #ccc;margin:2px 0}
+.tbar{display:flex;gap:1px;padding:2px 4px;border-bottom:1px solid #bbb;align-items:center;flex-wrap:wrap}
+.tb{min-width:24px;height:22px;border:1px solid transparent;background:none;padding:0 3px;font-size:14px;cursor:default}.tb:hover{border-color:#7da2ce;background:#dbe8f8}.tb.dis{opacity:.35;pointer-events:none}
+.sepv{width:1px;height:18px;background:#bbb;margin:0 3px}
+#main{flex:1;min-height:0;display:flex;flex-direction:column}
+#top{flex:1;min-height:0;display:flex}
+#left{width:var(--lw);display:flex;flex-direction:column;border-right:1px solid #999;min-width:0}
+.ph{background:#e4e8ee;padding:2px 6px;font-weight:700;border-bottom:1px solid #bbb}
+.vw{padding:4px 6px}.lb{padding:3px 6px;font-weight:700}
+.box{flex:1;min-height:40px;margin:0 4px 4px;background:#fff;border:1px solid #888;overflow:auto}
+.em{padding:8px;color:#777}
+.sp{background:#e0e0e0;flex:none}#sp1{width:5px;cursor:col-resize}#sp2,#sp3{height:5px;cursor:row-resize}
+#procwrap{height:var(--ph);display:flex;flex-direction:column}
+#left.noh #hier,#left.noh .lb:first-of-type,#left.noh #sp2{display:none}#left.nop #procwrap{display:none}
+.pr{padding:3px 6px;display:flex;gap:6px;align-items:center}.pr button{border:0;background:none;color:#1a9a1a;font-size:16px;padding:0}
+.ltabs{border-top:1px solid #999;padding:3px 6px;background:#e4e8ee;font-weight:700}
+.tr{display:flex;align-items:center;gap:3px;height:18px;white-space:nowrap;cursor:default}.tr.sel{background:#3d7ac0;color:#fff}
+.tg{width:12px;text-align:center;text-decoration:none;font-size:11px}
+.ic{width:14px;height:14px;display:inline-block;border:1px solid #2a5aa0;background:#e8f0fb}.ic.prj{background:#cfe3ff}.ic.chip{background:#555;border-color:#222}.ic.v{background:#fff;border-color:#2a6ad0}.ic.g{background:#f0b060;border-color:#a06020}.ic.d{background:#cde;border-radius:7px}
+.st{width:14px;text-align:center}.st.ok{color:#1a9a1a}.st.err{color:#d02020}.st.info{color:#2060c0}.st.run{color:#e08000}
+#ws{flex:1;display:flex;flex-direction:column;min-width:0}
+#tabs{display:flex;background:#e4e8ee;border-bottom:1px solid #888;min-height:24px}
+.tab{padding:4px 8px;border:1px solid #999;border-bottom:0;margin:2px 1px 0;background:#d8dde6;display:flex;gap:8px;cursor:default}.tab.on{background:#fff}.tab .x{font-weight:400;color:#c33}
+#ed{flex:1;display:flex;min-height:0;background:#fff;position:relative}
+#gut{width:46px;text-align:right;padding:2px 6px 0 0;font:13px/16px "Courier New",monospace;color:#333;background:#f0f0f0;border-right:1px solid #bbb;overflow:hidden;white-space:pre}
+#cw{flex:1;position:relative}
+#hl,#ta{position:absolute;inset:0;margin:0;padding:2px 4px;font:13px/16px "Courier New",monospace;white-space:pre;border:0;tab-size:4}
+#hl{overflow:hidden;pointer-events:none;color:#000}
+#ta{background:transparent;color:transparent;caret-color:#000;resize:none;outline:0;overflow:auto;user-select:text}
+#cl{position:absolute;left:0;right:0;height:16px;background:#eef3fb;pointer-events:none}
+.k{color:#00008b;font-weight:700}.cm{color:#008000}.n{color:#a000a0}.s{color:#c00}.d{color:#d020d0}
+#noed{position:absolute;inset:0;background:#fff;color:#777;padding:12px;z-index:2}
+#con{height:var(--ch);display:flex;flex-direction:column;border-top:1px solid #888}
+.chd{display:flex;align-items:center;justify-content:space-between;background:#e4e8ee;padding:1px 6px;font-weight:700}.chd button,.btn{border:1px solid #888;background:#f4f4f4;padding:1px 6px;margin-left:3px}
+#cbody,#ibody2{flex:1;overflow:auto;background:#fff;font:12px "Courier New",monospace;padding:2px 4px;user-select:text}
+.cl.ERROR{color:#c00}.cl.WARNING{color:#a06000}
+#ctabs{display:flex;background:#e4e8ee;border-top:1px solid #aaa}#ctabs span{padding:3px 12px;border-right:1px solid #aaa}#ctabs .on{background:#fff;font-weight:700}
+#status{height:20px;border-top:1px solid #999;display:flex;justify-content:space-between;padding:2px 10px;background:#f0f0f0}
+.ov{position:fixed;inset:0;background:#0003;z-index:200;display:flex;align-items:center;justify-content:center}
+.dlg{background:#f0f0f0;border:1px solid #4a6b9a;box-shadow:3px 3px 12px #0007;max-width:96vw;max-height:94vh;display:flex;flex-direction:column}
+.dt{background:#bcd0ea;padding:5px 8px;display:flex;justify-content:space-between}.dx{color:#a00;font-weight:400}
+.db{padding:12px 14px;overflow:auto;background:#fff;margin:6px;border:1px solid #ccc}.df{padding:6px 10px 10px;display:flex;justify-content:flex-end;gap:8px}.df button{min-width:80px;padding:3px 8px;border:1px solid #777;background:#e8e8e8}.df button:first-child{margin-right:auto;min-width:0}
+.db h3{margin:0 0 8px;font:16px "Segoe UI",Tahoma;color:#1e3f7a}
+.db input[type=text],.db select,.db textarea{font:12px Tahoma;border:1px solid #888;padding:2px;width:100%;user-select:text}
+.db table{border-collapse:collapse;width:100%}.db td,.db th{padding:2px 4px;text-align:left}.db fieldset{border:1px solid #bbb;margin:0 0 8px;padding:6px}
+.db pre{background:#f6f6f6;border:1px solid #ccc;padding:6px;max-height:240px;overflow:auto;font:12px "Courier New";user-select:text}
+.er{color:#c00}
+#ctx{position:fixed;display:none;z-index:300}
+#guide{position:fixed;right:12px;bottom:30px;width:300px;background:#ffffe1;border:1px solid #333;padding:6px 8px;z-index:150;display:none;box-shadow:2px 2px 6px #0005}
+#isim{position:fixed;inset:0;z-index:100;background:#f0f0f0;display:none;flex-direction:column}
+#ib{flex:1;display:flex;min-height:0}
+#iside{width:250px;display:flex;flex-direction:column;border-right:1px solid #999}
+#iwave{flex:1;display:flex;flex-direction:column;min-width:0}
+#wrow{flex:1;display:flex;min-height:0;background:#000}
+#wn,#wv{background:#000;color:#fff;overflow:hidden}
+#wn{width:150px;border-right:2px solid #666}#wv{width:110px;border-right:2px solid #666;font-family:"Courier New",monospace}
+.wr{height:20px;line-height:20px;padding:0 6px;white-space:nowrap}.wr.h{height:24px;line-height:24px;background:#fff;color:#000;font-weight:700}.wr.sel{background:#203050}
+#wc{flex:1;position:relative}#cv{position:absolute;inset:0;width:100%;height:100%}
+#icon{height:130px;display:flex;flex-direction:column;border-top:1px solid #888}
+#seg{display:none;padding:6px;text-align:center}
+</style></head><body>
+<div id="title"><span id="tt"></span><span class="wb"><b>–</b><b>▢</b><b>✕</b></span></div>
+<div class="mbar" id="menubar"></div><div class="tbar" id="toolbar"></div>
+<div id="main"><div id="top">
+<div id="left"><div class="ph">Design</div>
+<div class="vw">View: <label><input type="radio" name="v" id="vi" checked> Implementation</label> <label><input type="radio" name="v" id="vs"> Simulation</label></div>
+<div class="lb">Hierarchy</div><div id="hier" class="box"></div><div class="sp" id="sp2"></div>
+<div id="procwrap"><div class="pr"><button id="rbtn" title="Run selected process">▶</button><span id="pst">No Processes Running</span></div><div class="lb" id="plab">Processes</div><div id="procs" class="box"></div></div>
+<div class="ltabs">Design</div></div>
+<div class="sp" id="sp1"></div>
+<div id="ws"><div id="tabs"></div><div id="ed"><div id="noed">No source open. Create a project (File &gt; New Project…) and add a source (right-click project &gt; New Source…).</div><div id="gut"></div><div id="cw"><div id="cl"></div><pre id="hl"></pre><textarea id="ta" spellcheck="false"></textarea></div></div></div>
+</div><div class="sp" id="sp3"></div>
+<div id="con"><div class="chd"><span>Console</span><span><button id="cclr">Clear Console</button><button id="ccp">Copy Console</button><button id="clat">Scroll to Latest</button></span></div><div id="cbody"></div>
+<div id="ctabs"><span>Console</span><span>Errors</span><span>Warnings</span><span>Information</span></div></div></div>
+<div id="status"><span id="st1">Ready</span><span id="st2">Ln 1 Col 1 &nbsp; Verilog</span></div>
+<div id="ctx"><div class="dd" id="ctxd" style="position:static"></div></div>
+<div id="guide"></div>
+<div id="isim"><div id="ititle"><span>ISim (P.20131013) - [Default.wcfg*]</span><button id="iclose" title="Close ISim and return to Project Navigator">✕</button></div>
+<div class="mbar" id="imenu"></div><div class="tbar" id="itool"></div>
+<div id="ib"><div id="iside"><div class="ph">Instances and Processes</div><div id="itree" class="box"></div><div class="ph">Objects</div><div id="iobj" class="box"></div><div id="seg"></div></div>
+<div id="iwave"><div id="wrow"><div id="wn"></div><div id="wv"></div><div id="wc"><canvas id="cv"></canvas></div></div>
+<input type="range" id="wsc" min="0" max="100" value="0" style="width:100%;margin:0"><div id="wst" style="padding:2px 8px"></div></div></div>
+<div id="icon"><div id="ibody2"></div><div id="ctabs"><span class="on">Console</span></div></div></div>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const E=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const mk=w=>w>=32?4294967295:2**w-1;
+/* ---------- reference lab code (reconstructed; compare against your manual) ---------- */
+const T=(m,d,ps,x,b)=>`\`timescale 1ns / 1ps\nmodule ${m}_tb;\n  // Inputs and outputs\n${d}\n  // Unit Under Test\n  ${m} uut (${ps.split(' ').map(p=>`.${p}(${p})`).join(', ')});\n${x}  initial begin\n${b.map(l=>'    '+l).join('\n')}\n  end\nendmodule\n`;
+const hd=m=>`\`timescale 1ns / 1ps\nmodule ${m}(`;
+const EXP=[
+['4:1 Multiplexer','mux4to1',hd('mux4to1')+`\n  input I0, input I1, input I2, input I3,\n  input S1, input S0,\n  output Y\n);\n  assign Y = (~S1 & ~S0 & I0) | (~S1 & S0 & I1) | (S1 & ~S0 & I2) | (S1 & S0 & I3);\nendmodule\n`,
+ T('mux4to1','  reg I0, I1, I2, I3, S1, S0;\n  wire Y;','I0 I1 I2 I3 S1 S0 Y','',['I0 = 0; I1 = 1; I2 = 0; I3 = 1; S1 = 0; S0 = 0;','#10 S0 = 1;','#10 S1 = 1; S0 = 0;','#10 S0 = 1;','#10 $finish;'])],
+['1:4 Demultiplexer','demux1to4',hd('demux1to4')+`\n  input D, input S1, input S0,\n  output Y0, output Y1, output Y2, output Y3\n);\n  assign Y0 = D & ~S1 & ~S0;\n  assign Y1 = D & ~S1 & S0;\n  assign Y2 = D & S1 & ~S0;\n  assign Y3 = D & S1 & S0;\nendmodule\n`,
+ T('demux1to4','  reg D, S1, S0;\n  wire Y0, Y1, Y2, Y3;','D S1 S0 Y0 Y1 Y2 Y3','',['D = 0; S1 = 0; S0 = 0;','#10 D = 1;','#10 S0 = 1;','#10 S1 = 1; S0 = 0;','#10 S0 = 1;','#10 $finish;'])],
+['4-to-2 Encoder','encoder4to2',hd('encoder4to2')+`\n  input I0, input I1, input I2, input I3,\n  output Y1, output Y0\n);\n  assign Y1 = I2 | I3;\n  assign Y0 = I1 | I3;\nendmodule\n`,
+ T('encoder4to2','  reg I0, I1, I2, I3;\n  wire Y1, Y0;','I0 I1 I2 I3 Y1 Y0','',['I0 = 1; I1 = 0; I2 = 0; I3 = 0;','#10 I0 = 0; I1 = 1;','#10 I1 = 0; I2 = 1;','#10 I2 = 0; I3 = 1;','#10 $finish;'])],
+['2-to-4 Decoder','decoder2to4',hd('decoder2to4')+`\n  input A, input B,\n  output Y0, output Y1, output Y2, output Y3\n);\n  assign Y0 = ~A & ~B;\n  assign Y1 = ~A & B;\n  assign Y2 = A & ~B;\n  assign Y3 = A & B;\nendmodule\n`,
+ T('decoder2to4','  reg A, B;\n  wire Y0, Y1, Y2, Y3;','A B Y0 Y1 Y2 Y3','',['A = 0; B = 0;','#10 B = 1;','#10 A = 1; B = 0;','#10 B = 1;','#10 $finish;'])],
+['Seven-Segment Display','seven_segment',hd('seven_segment')+`\n  input [3:0] D,\n  output a, output b, output c, output d, output e, output f, output g\n);\n  assign a = D[3] | D[1] | (D[2] & D[0]) | (~D[2] & ~D[0]);\n  assign b = ~D[2] | (~D[1] & ~D[0]) | (D[1] & D[0]);\n  assign c = D[2] | ~D[1] | D[0];\n  assign d = D[3] | (~D[2] & ~D[0]) | (~D[2] & D[1]) | (D[1] & ~D[0]) | (D[2] & ~D[1] & D[0]);\n  assign e = (~D[2] & ~D[0]) | (D[1] & ~D[0]);\n  assign f = D[3] | (~D[1] & ~D[0]) | (D[2] & ~D[1]) | (D[2] & ~D[0]);\n  assign g = D[3] | (D[2] & ~D[1]) | (~D[2] & D[1]) | (D[1] & ~D[0]);\nendmodule\n`,
+ T('seven_segment','  reg [3:0] D;\n  wire a, b, c, d, e, f, g;','D a b c d e f g','',Array.from({length:10},(_,i)=>(i?'#10 ':'')+`D = 4'b${i.toString(2).padStart(4,'0')};`).concat('#10 $finish;'))],
+['D Flip-Flop','d_flipflop',hd('d_flipflop')+`\n  input D, input CLK,\n  output reg Q\n);\n  always @(posedge CLK)\n    Q <= D;\nendmodule\n`,
+ T('d_flipflop','  reg D, CLK;\n  wire Q;','D CLK Q','  always #5 CLK = ~CLK;\n',['CLK = 0; D = 0;','#10 D = 1;','#10 D = 0;','#10 D = 1;','#10 $finish;'])],
+['Synchronous Counter','synchronous_counter',hd('synchronous_counter')+`\n  input CLK, input RESET,\n  output reg [3:0] Q\n);\n  always @(posedge CLK) begin\n    if (RESET)\n      Q <= 4'b0000;\n    else\n      Q <= Q + 1'b1;\n  end\nendmodule\n`,
+ T('synchronous_counter','  reg CLK, RESET;\n  wire [3:0] Q;','CLK RESET Q','  always #5 CLK = ~CLK;\n',['CLK = 0; RESET = 1;','#10 RESET = 0;','#150 $finish;'])]];
+/* ---------- Verilog subset: tokenizer, parser ---------- */
+function tok(src){src=src.replace(/\/\*[\s\S]*?\*\/|\/\/.*|`.*/g,m=>m.replace(/[^\n]/g,' '));const re=/\d*'[sS]?[bBdDhHoO][0-9a-fA-FxXzZ_?]+|\d+|[A-Za-z_$][\w$]*|<=|>=|==|!=|&&|\|\||[^\s]/g,o=[];let m,ln=1,l=0;while(m=re.exec(src)){ln+=(src.slice(l,m.index).match(/\n/g)||[]).length;l=m.index;o.push({s:m[0],l:ln})}return o}
+function num(s){const m=s.match(/^(\d*)'[sS]?([bdhoBDHO])([0-9a-fA-FxXzZ_?]+)$/);if(!m)return{v:+s,w:32};const w=m[1]?+m[1]:32,d=m[3].replace(/_/g,'');if(/[xXzZ?]/.test(d))return{v:null,w};return{v:(parseInt(d,{b:2,d:10,h:16,o:8}[m[2].toLowerCase()])>>>0)&mk(w),w}}
+const ID=/^[A-Za-z_]/,DIR=['input','output','inout'];
+function parse(src,file){const T=tok(src);let i=0;
+const er=(m,t)=>{throw{msg:m,line:(t||T[i]||T[T.length-1]||{l:1}).l,file}};
+const pk=()=>T[i]&&T[i].s,nx=()=>T[i++]||er('Unexpected end of file'),ac=s=>pk()===s&&(i++,1);
+const ex=s=>{const t=T[i];if(!t||t.s!==s)er(`Expected '${s}'`+(t?` but found '${t.s}'`:' before end of file'));i++;return t};
+const LV=[['||'],['&&'],['|'],['^'],['&'],['==','!='],['<','>','<=','>='],['+','-']];
+const expr=()=>{const c=bin(0);if(ac('?')){const a=expr();ex(':');return{k:'?',c,a,b:expr()}}return c};
+function bin(n){if(n>=LV.length)return un();let l=bin(n+1);while(LV[n].includes(pk())){const o=nx();l={k:'b',o:o.s,l,r:bin(n+1)}}return l}
+function un(){const t=T[i];if(!t)er('Unexpected end of file');if(['~','!','-'].includes(t.s)){i++;return{k:'u',o:t.s,e:un()}}return pri()}
+function pri(){const t=nx();if(t.s==='('){const e=expr();ex(')');return e}
+if(t.s==='{'){const a=[expr()];while(ac(','))a.push(expr());ex('}');return{k:'c',a}}
+if(/^[\d']/.test(t.s))return{k:'n',...num(t.s)};
+if(ID.test(t.s)){const n={k:'i',n:t.s,ln:t.l};if(ac('[')){n.a=expr();if(ac(':'))n.b=expr();ex(']')}return n}
+er(`Unexpected '${t.s}'`,t)}
+function lval(){const t=nx();if(!ID.test(t.s))er('Expected signal name on left side of assignment',t);const n={n:t.s,ln:t.l};if(ac('[')){n.a=expr();if(ac(':'))n.b=expr();ex(']')}return n}
+function stmt(){const t=T[i];if(!t)er('Unexpected end of file');
+if(ac('begin')){const b=[];while(pk()!=='end'){if(i>=T.length)er("Expected 'end' before end of file");b.push(stmt())}i++;return{k:'blk',b}}
+if(ac('#')){let d;if(ac('(')){d=nx().s;ex(')')}else d=nx().s;if(isNaN(+d))er('Expected delay value',t);return{k:'dly',d:+d,s:ac(';')?null:stmt()}}
+if(ac('if')){ex('(');const c=expr();ex(')');const a=stmt();return{k:'if',c,a,b:ac('else')?stmt():null}}
+if(t.s[0]==='$'){i++;if(ac('(')){while(pk()!==')')nx();i++}ex(';');return{k:'sys',n:t.s}}
+if(['case','for','while','forever','repeat','wait','@','function','task'].includes(t.s))er(`Unsupported construct '${t.s}' in this simulator`,t);
+const l=lval(),nb=pk()==='<=';if(!nb&&pk()!=='=')er("Malformed assignment: expected '=' or '<='");i++;const r=expr();ex(';');return{k:'as',l,r,nb}}
+const rng=()=>{if(!ac('['))return 0;const a=+nx().s;ex(':');const b=+nx().s;ex(']');return Math.abs(a-b)+1};
+function mod(){const mt=ex('module'),nm=nx();if(!ID.test(nm.s))er('Expected module name',nm);const M={name:nm.s,ln:mt.l,decl:{},ports:[],items:[],file};
+const dc=(n,dir,reg,w,l)=>{const d=M.decl[n]||(M.decl[n]={});if(dir)d.dir=dir;if(reg)d.reg=1;if(w)d.w=w;d.ln=d.ln||l};
+if(ac('(')){let dir=0,reg=0,w=0;while(pk()!==')'){const t=nx();if(DIR.includes(t.s)){dir=t.s;reg=0;ac('wire');if(ac('reg'))reg=1;w=rng()}else if(t.s!==','){if(!ID.test(t.s))er(`Unexpected '${t.s}' in port list`,t);M.ports.push(t.s);dc(t.s,dir,reg,w,t.l)}}i++}
+ex(';');
+while(pk()!=='endmodule'){if(i>=T.length)er("Expected 'endmodule' before end of file");const t=T[i];
+if(['input','output','inout','wire','reg'].includes(t.s)){i++;const dir=DIR.includes(t.s)?t.s:0;let reg=t.s==='reg';if(dir){ac('wire');if(ac('reg'))reg=1}const w=rng();do{const n=nx();dc(n.s,dir,reg,w,n.l);if(!dir&&!reg&&pk()==='='){i++;M.items.push({k:'assign',l:{n:n.s,ln:n.l},r:expr(),ln:n.l})}}while(ac(','));ex(';')}
+else if(t.s==='assign'){i++;const l=lval();ex('=');const r=expr();ex(';');M.items.push({k:'assign',l,r,ln:t.l})}
+else if(t.s==='initial'){i++;M.items.push({k:'init',s:stmt(),ln:t.l})}
+else if(t.s==='always'){i++;let sens=null;if(ac('@')){sens=[];if(ac('*'))sens='*';else{ex('(');if(ac('*'))sens='*';else do{sens.push({e:ac('posedge')?'pos':ac('negedge')?'neg':'lv',n:nx().s})}while(ac('or')||ac(','));ex(')')}}M.items.push({k:'alw',sens,s:stmt(),ln:t.l})}
+else if(ID.test(t.s)&&T[i+1]&&ID.test(T[i+1].s)&&!['parameter','function','task','integer','genvar','generate','localparam'].includes(t.s)){const inst=T[i+1].s;i+=2;ex('(');const c=[];if(pk()!==')')do{if(ac('.')){const p=nx().s;ex('(');const e=pk()===')'?null:expr();ex(')');c.push({p,e})}else c.push({p:null,e:expr()})}while(ac(','));ex(')');ex(';');M.items.push({k:'inst',mod:t.s,inst,c,ln:t.l})}
+else er(`Unsupported or unexpected '${t.s}'`)}
+i++;return M}
+const out=[];while(i<T.length){if(pk()!=='module')er(`Expected 'module' but found '${pk()}'`);out.push(mod())}
+if(!out.length)er('No module declaration found');return out}
+/* ---------- event-driven simulator ---------- */
+function Sim(mods,top){const s={t:0,q:[],sq:0,nba:[],fin:false,ev:0};
+const sched=(t,f)=>s.q.push({t,n:s.sq++,f});
+const net=(name,w,reg)=>({name,w:w||1,reg,v:null,h:[[0,null]],dep:[],edge:[]});
+const set=(n,v)=>{if(v!==null)v=((v>>>0)&mk(n.w))>>>0;if(v===n.v)return;const o=n.v;n.v=v;const L=n.h[n.h.length-1];L[0]===s.t?L[1]=v:n.h.push([s.t,v]);n.dep.forEach(f=>sched(s.t,f));const a=o===null?null:o&1,b=v===null?null:v&1;n.edge.forEach(e=>{if(e.t==='pos'?(a!==1&&b===1):(a!==0&&b===0))sched(s.t,e.f)})};
+const run=g=>{const r=g.next();if(!r.done)sched(s.t+r.value,()=>run(g))};
+function cx(e,sc,col){switch(e.k){
+case'n':return{f:()=>e.v,w:e.w};
+case'i':{const n=sc[e.n];if(!n)throw{msg:`Undefined signal '${e.n}'`,line:e.ln};col.add(n);
+if(e.a){const a=cx(e.a,sc,col);if(e.b){const b=cx(e.b,sc,col);return{f:()=>{const h=a.f(),l=b.f();return n.v===null?null:(n.v>>>l)&mk(h-l+1)},w:Math.abs(e.a.v-e.b.v)+1||1}}return{f:()=>{const x=a.f();return n.v===null||x===null?null:(n.v>>>x)&1},w:1}}
+return{f:()=>n.v,w:n.w}}
+case'u':{const a=cx(e.e,sc,col),w=a.w,o=e.o;return{f:()=>{const x=a.f();if(x===null)return null;return o==='~'?((~x>>>0)&mk(w))>>>0:o==='!'?+!x:((-x>>>0)&mk(w))>>>0},w:o==='!'?1:w}}
+case'b':{const a=cx(e.l,sc,col),b=cx(e.r,sc,col),o=e.o,w=Math.max(a.w,b.w),rel=['==','!=','<','>','<=','>=','&&','||'].includes(o);
+return{f:()=>{const x=a.f(),y=b.f();if((o==='&'||o==='&&')&&(x===0||y===0))return 0;if((o==='|'||o==='||')&&((x===1&&a.w===1)||(y===1&&b.w===1)))return 1;if(x===null||y===null)return null;
+switch(o){case'&':return(x&y)>>>0;case'|':return(x|y)>>>0;case'^':return(x^y)>>>0;case'+':return(x+y)>>>0;case'-':return(x-y)>>>0;case'==':return+(x===y);case'!=':return+(x!==y);case'<':return+(x<y);case'>':return+(x>y);case'<=':return+(x<=y);case'>=':return+(x>=y);case'&&':return+!!(x&&y);default:return+!!(x||y)}},w:rel?1:w}}
+case'?':{const c=cx(e.c,sc,col),a=cx(e.a,sc,col),b=cx(e.b,sc,col);return{f:()=>{const x=c.f();return x===null?null:x?a.f():b.f()},w:Math.max(a.w,b.w)}}
+case'c':{const p=e.a.map(x=>cx(x,sc,col));return{f:()=>{let r=0;for(const q of p){const v=q.f();if(v===null)return null;r=r*2**q.w+v}return r>>>0},w:p.reduce((a,q)=>a+q.w,0)}}}}
+function lv(l,sc,col){const n=sc[l.n];if(!n)throw{msg:`Undefined signal '${l.n}'`,line:l.ln};n.drv=1;if(!l.a)return v=>set(n,v);const a=cx(l.a,sc,col),b=l.b&&cx(l.b,sc,col);
+return b?v=>{const h=a.f(),lo=b.f(),m=mk(h-lo+1);set(n,(((n.v||0)&~(m<<lo))|((v&m)<<lo))>>>0)}:v=>{const i=a.f();if(i===null||v===null)return;set(n,((n.v||0)&~(1<<i))|((v&1)<<i))}}
+function cs(st,sc,col){switch(st.k){
+case'blk':{const a=st.b.map(x=>cs(x,sc,col));return function*(){for(const f of a)yield*f()}}
+case'as':{const l=lv(st.l,sc,col),r=cx(st.r,sc,col);return function*(){const v=r.f();if(st.nb)s.nba.push(()=>l(v));else l(v)}}
+case'dly':{const b=st.s?cs(st.s,sc,col):null;return function*(){yield st.d;if(b)yield*b()}}
+case'if':{const c=cx(st.c,sc,col),a=cs(st.a,sc,col),b=st.b?cs(st.b,sc,col):null;return function*(){if(c.f())yield*a();else if(b)yield*b()}}
+default:return function*(){if(st.n==='$finish'||st.n==='$stop')s.fin=true}}}
+function elab(nm,conn,path,dp,node){const M=mods[nm];if(!M)throw{msg:`Module '${nm}' is not defined`,line:0};if(dp>6)throw{msg:'Instance hierarchy too deep',line:M.ln,file:M.file};
+const sc={};for(const k in M.decl)sc[k]=conn&&conn[k]?conn[k]:net(path+k,M.decl[k].w,M.decl[k].reg);
+for(const k in M.decl)if(M.decl[k].dir==='output'){sc[k].out=1;sc[k].om=nm;sc[k].of=M.file}
+node.mod=nm;node.nets=sc;node.kids=[];node.M=M;
+try{for(const it of M.items){
+if(it.k==='assign'){const col=new Set,l=lv(it.l,sc,col),r=cx(it.r,sc,col),f=()=>l(r.f());col.forEach(n=>n.dep.push(f));sched(0,f)}
+else if(it.k==='init'){const g=cs(it.s,sc,new Set);sched(0,()=>run(g()))}
+else if(it.k==='alw'){const col=new Set,b=cs(it.s,sc,col);
+if(!it.sens){if(it.s.k!=='dly'||!(it.s.d>0))throw{msg:"'always' without edge or delay control would loop forever",line:it.ln};sched(0,()=>run((function*(){for(;;)yield*b()})()))}
+else{const f=()=>run(b());if(it.sens==='*'){col.forEach(n=>n.dep.push(f));sched(0,f)}else it.sens.forEach(x=>{const n=sc[x.n];if(!n)throw{msg:`Undefined signal '${x.n}'`,line:it.ln};if(x.e==='lv'){n.dep.push(f);sched(0,f)}else n.edge.push({t:x.e,f})})}}
+else{const C=mods[it.mod];if(!C)throw{msg:`Module '${it.mod}' is not defined`,line:it.ln};const cn={};
+it.c.forEach((c,i)=>{const p=c.p||C.ports[i];if(!p||!C.decl[p])throw{msg:`Module '${it.mod}' has no port '${p||i}'`,line:it.ln};if(!c.e)return;
+if(c.e.k==='i'&&!c.e.a){if(!sc[c.e.n])throw{msg:`Undefined signal '${c.e.n}'`,line:it.ln};cn[p]=sc[c.e.n]}
+else if(c.e.k==='n'){const q=net('const',c.e.w);q.v=c.e.v;q.h=[[0,c.e.v]];cn[p]=q}else throw{msg:'Unsupported port connection expression',line:it.ln}});
+const kid={n:it.inst};node.kids.push(kid);elab(it.mod,cn,path+it.inst+'.',dp+1,kid)}}}catch(e){if(!e.file)e.file=M.file;throw e}}
+if(!top)throw{msg:'No module declaration found',line:1};
+s.root={n:top};elab(top,null,'',0,s.root);s.warn=[];const seen=new Set,wk=n=>{Object.values(n.nets).forEach(x=>{if(x.out&&!x.drv&&!seen.has(x)){seen.add(x);s.warn.push(`Output '${x.name}' of module '${x.om}' (${x.of}) is never driven by any assign or always block, so it stays X.`)}});n.kids.forEach(wk)};wk(s.root);
+s.step=lim=>{let c=0;for(;;){if(s.fin)return'fin';if(++c>20000)return'more';s.q.sort((a,b)=>a.t-b.t||a.n-b.n);const e=s.q[0];
+if(e&&e.t<=s.t){s.q.shift();e.f();if(++s.ev>1e6)throw{msg:'Event limit exceeded (possible zero-delay loop)',line:0};continue}
+if(s.nba.length){const a=s.nba;s.nba=[];a.forEach(f=>f());continue}
+if(!e)return'idle';if(e.t>lim){s.t=Math.max(s.t,lim);return'time'}s.t=e.t}};
+s.step(0);return s}
+/* ---------- application state ---------- */
+let P=null,sel=null,act=null,open=[],view='impl',msgs=[],mtab='Console',pstat={},selP=null,busy=null,timer=null,collapsed={},S=null,LB=null,simDone=0,guideOn=0,stopF=0,openM=null;
+const ta=$('#ta'),isSaved=f=>f.text===f.saved;
+function log(l,t,file,line){msgs.push({l,t,file,line,ts:new Date().toTimeString().slice(0,8)});renderCon()}
+function renderCon(){const c=$('#cbody'),fl={Console:0,Errors:'ERROR',Warnings:'WARNING',Information:'INFO'}[mtab];c.innerHTML='';msgs.filter(m=>!fl||m.l===fl).forEach(m=>{const d=E('div','cl '+m.l,`[${m.ts}] ${m.l}: ${esc(m.t)}`);if(m.line){d.style.cursor='pointer';d.onclick=()=>goLine(m.file,m.line)}c.append(d)});c.scrollTop=c.scrollHeight;$$('#con #ctabs span').forEach(s=>s.classList.toggle('on',s.textContent===mtab))}
+$$('#con #ctabs span').forEach(s=>s.onclick=()=>{mtab=s.textContent;renderCon()});
+$('#cclr').onclick=()=>{msgs=[];renderCon()};$('#clat').onclick=()=>{$('#cbody').scrollTop=1e9};
+$('#ccp').onclick=()=>navigator.clipboard&&navigator.clipboard.writeText($('#cbody').innerText).then(()=>log('INFO','Console copied to clipboard.'));
+function fail(e,fn){if(e&&e.msg!==undefined)log('ERROR',`${e.file||fn||''}${e.line?', line '+e.line:''}: ${e.msg}`,e.file||fn,e.line);else log('ERROR','Internal error: '+e)}
+/* dialogs */
+function dlg(t,w,modal=1){const ov=E('div','ov');if(!modal)ov.style.pointerEvents='none';const b=E('div','dlg');b.style.width=w+'px';b.style.pointerEvents='auto';b.innerHTML=`<div class="dt"><span>${t}</span><b class="dx" style="cursor:default">✕</b></div><div class="db"></div><div class="df"></div>`;ov.append(b);document.body.append(ov);
+const x={ov,b:b.querySelector('.db'),f:b.querySelector('.df'),close:()=>ov.remove()};b.querySelector('.dx').onclick=x.close;
+x.btn=(l,fn,dis)=>{const k=E('button','',l);k.disabled=!!dis;k.onclick=()=>{if(!fn||fn()!==false)x.close()};x.f.append(k);return k};return x}
+const alert2=(t,m)=>{const x=dlg(t,380);x.b.innerHTML=m;x.btn('OK')};
+const ask3=(t,m,yes,no)=>{const x=dlg(t,400);x.b.innerHTML=m;x.btn('Yes',yes);if(no)x.btn('No',no);x.btn('Cancel')};
+const ask=(t,lab,def,cb)=>{const x=dlg(t,360);x.b.innerHTML=`${lab}<br><input type="text" id="av" value="${esc(def)}">`;const i=x.b.querySelector('input');setTimeout(()=>{i.focus();i.select()},0);i.onkeydown=e=>{if(e.key==='Enter'){x.close();cb(i.value)}};x.btn('OK',()=>{cb(i.value)});x.btn('Cancel')};
+const pickFile=(acc,cb)=>{const i=E('input');i.type='file';i.accept=acc;i.onchange=()=>{const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>cb(r.result,f.name);r.readAsText(f)};i.click()};
+const dl=(name,text)=>{const a=E('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));a.download=name;a.click()};
+function ctx(e,items){e.preventDefault();e.stopPropagation();const d=$('#ctxd');d.innerHTML='';items.forEach(it=>{const r=E('div','di',`<span>${it[0]}</span>`);r.onclick=()=>{$('#ctx').style.display='none';it[1]()};d.append(r)});const c=$('#ctx');c.style.display='block';c.style.left=Math.min(e.clientX,innerWidth-230)+'px';c.style.top=Math.min(e.clientY,innerHeight-items.length*22-10)+'px'}
+/* menus */
+function mkMenu(el,defs,A){for(const k in defs){const m=E('div','mi',k);m.onclick=e=>{e.stopPropagation();const was=openM===m;closeDrop();if(!was)drop(m,defs[k],A)};m.onmouseenter=()=>{if(openM&&openM!==m){closeDrop();drop(m,defs[k],A)}};el.append(m)}}
+function drop(m,items,A){const d=E('div','dd');items.forEach(it=>{if(!it){d.append(E('hr'));return}const r=E('div','di'+(A.dis&&A.dis(it[1])?' dis':''),`<span>${it[0]}</span><i>${it[2]||''}</i>`);r.onclick=e=>{e.stopPropagation();closeDrop();A[it[1]]()};d.append(r)});m.append(d);m.classList.add('on');openM=m}
+function closeDrop(){if(openM){openM.classList.remove('on');const d=openM.querySelector('.dd');if(d)d.remove();openM=null}}
+document.addEventListener('click',()=>{closeDrop();$('#ctx').style.display='none'});
+/* project helpers */
+const modOf=f=>((f.text.match(/\bmodule\s+(\w+)/)||[])[1]||f.name.replace(/\.\w+$/,''));
+const devStr=()=>`${P.set.Device.toLowerCase()}-${P.set.Speed.replace('-','')}${P.set.Package.toLowerCase()}`;
+const firstOf=t=>P.files.find(f=>f.type===t);
+const insts=f=>{const o=[],re=/^\s*(\w+)\s+(\w+)\s*\(/gm;let m;while(m=re.exec(f.text)){const g=P.files.find(x=>x.type!=='doc'&&x!==f&&new RegExp('\\bmodule\\s+'+m[1]+'\\b').test(x.text));if(g)o.push([m[2],m[1],g])}return o};
+function setTitle(){$('#tt').textContent=P?`ISE Project Navigator (P.20131013) - ${P.loc}\\${P.name}\\${P.name}.xise${act?' - ['+act.name+']':''}`:'ISE Project Navigator (P.20131013)'}
+/* editor */
+const KW=new Set('module endmodule input output inout wire reg assign always begin end if else posedge negedge initial parameter case endcase integer or'.split(' '));
+function hi(t){return t.replace(/(\/\/.*|\/\*[\s\S]*?\*\/)|(`\w+)|("[^"\n]*")|(\b\d*'[sS]?[bBdDhHoO][0-9a-fA-FxXzZ_?]+|\b\d+\b)|(\$?\b[A-Za-z_]\w*\b)|([<>&])/g,(m,c,d,s,n,w,x)=>c?`<span class="cm">${esc(c)}</span>`:d?`<span class="d">${d}</span>`:s?`<span class="s">${esc(s)}</span>`:n?`<span class="n">${n}</span>`:w?(KW.has(w)?`<span class="k">${w}</span>`:w[0]==='$'?`<span class="d">${w}</span>`:w):esc(x))}
+function edSync(){const t=ta.value;$('#hl').innerHTML=hi(t)+'\n';const n=t.split('\n').length;$('#gut').textContent=Array.from({length:n},(_,i)=>i+1).join('\n');edPos()}
+function edPos(){const v=ta.value.slice(0,ta.selectionStart).split('\n');$('#st2').innerHTML=`Ln ${v.length} Col ${v[v.length-1].length+1} &nbsp; Verilog`;$('#cl').style.top=(v.length-1)*16+2-ta.scrollTop+'px';$('#hl').scrollTop=ta.scrollTop;$('#hl').scrollLeft=ta.scrollLeft;$('#gut').scrollTop=ta.scrollTop}
+ta.oninput=()=>{if(act){act.text=ta.value;renderTabs();renderGuide()}edSync()};
+ta.onscroll=edPos;ta.onkeyup=ta.onclick=edPos;
+ta.onkeydown=e=>{if(e.key==='Tab'){e.preventDefault();document.execCommand('insertText',false,'    ')}else if(e.key==='Enter'){e.preventDefault();const l=ta.value.slice(0,ta.selectionStart).split('\n').pop();document.execCommand('insertText',false,'\n'+l.match(/^\s*/)[0]+(/\bbegin\s*$/.test(l)?'    ':''))}};
+function openFile(f){if(!open.includes(f))open.push(f);act=sel=f;ta.value=f.text;edSync();$('#noed').style.display='none';renderAll()}
+function closeTab(f){const go=()=>{open=open.filter(x=>x!==f);if(act===f){act=open[open.length-1]||null;if(act)ta.value=act.text;else ta.value=''}if(!act)$('#noed').style.display='block';edSync();renderAll()};
+if(isSaved(f))go();else ask3('Save Changes',`Save changes to ${esc(f.name)}?`,()=>{save(f);go()},go)}
+function renderTabs(){const t=$('#tabs');t.innerHTML='';open.forEach(f=>{const d=E('div','tab'+(f===act?' on':''),`<span>${esc(f.name)}${isSaved(f)?'':'*'}</span><b class="x">✕</b>`);d.onclick=()=>openFile(f);d.querySelector('.x').onclick=e=>{e.stopPropagation();closeTab(f)};t.append(d)})}
+function goLine(file,line){const f=P&&P.files.find(x=>x.name===file);if(!f)return;openFile(f);const L=f.text.split('\n');let s=0;for(let i=0;i<line-1;i++)s+=L[i].length+1;ta.focus();ta.setSelectionRange(s,s+(L[line-1]||'').length);ta.scrollTop=Math.max(0,(line-4)*16);edPos()}
+function save(f){f=f||act;if(!f)return;f.saved=f.text;log('INFO',`File '${f.name}' saved.`);renderAll()}
+/* tree + processes */
+function renderTree(){const h=$('#hier');h.innerHTML='';if(!P){h.innerHTML='<div class="em">No project open.<br>Use File &gt; New Project…</div>';return}
+const R=(lv,txt,ico,f,key,kids,menu)=>{const r=E('div','tr'+(f&&f===sel?' sel':''));r.style.paddingLeft=4+lv*16+'px';r.innerHTML=`<s class="tg">${kids?(collapsed[key]?'+':'−'):''}</s><u class="ic ${ico}"></u><span>${esc(txt)}</span>`;
+r.querySelector('.tg').onclick=e=>{e.stopPropagation();collapsed[key]=!collapsed[key];renderTree()};r.onclick=()=>{if(f){f.type==='doc'||view==='impl'||f.type==='tb'?openFile(f):openFile(f)}else{sel=null;renderAll()}};r.ondblclick=()=>f&&openFile(f);r.oncontextmenu=e=>ctx(e,menu||[['New Source…',()=>wizNS()],['Add Source…',A.as],['Project Properties…',A.pp]]);h.append(r)};
+const fm=f=>[['New Source…',()=>wizNS()],['Set as Top Module',()=>{P.top=f.name;log('INFO',`'${f.name}' set as top module.`);renderAll()}],['Rename…',()=>{sel=f;A.ren()}],['Remove from Project',()=>{sel=f;A.rm()}],['Properties',()=>{sel=f;A.sp()}]];
+R(0,P.name,'prj',null,'p',1);if(collapsed.p)return;R(1,devStr(),'chip',null,'d',1);if(collapsed.d)return;
+P.files.filter(f=>f.type===(view==='impl'?'design':'tb')).forEach(f=>{const k=insts(f);R(2,`${modOf(f)} (${f.name})`,'v',f,'f'+f.name,k.length,fm(f));if(!collapsed['f'+f.name])k.forEach(([i,m,g])=>R(3,`${i} - ${m} (${g.name})`,'v',g,'i'+i,0,fm(g)))});
+P.files.filter(f=>f.type==='doc').forEach(f=>R(2,f.name,'d',f,'f'+f.name,0,fm(f)))}
+const PI=[['ds','Design Summary/Reports'],['Design Utilities',[['vrtl','View RTL Schematic'],['vds','View Design Summary']]],['uc','User Constraints'],['Synthesize - XST',[['chk','Check Syntax'],['syn','Synthesize']]],['Implement Design',[['tr','Translate'],['map','Map'],['par','Place & Route'],['tim','Generate Timing Report']]],['gpf','Generate Programming File']];
+const PS=[['ISim Simulator',[['bchk','Behavioral Check Syntax'],['sim','Simulate Behavioral Model']]]];
+const PN={};[...PI,...PS].forEach(x=>Array.isArray(x[1])?x[1].forEach(y=>PN[y[0]]=y[1]):PN[x[0]]=x[1]);
+function renderProcs(){const p=$('#procs');p.innerHTML='';$('#plab').textContent='Processes: '+(sel?modOf(sel):P?P.name:'');$('#pst').textContent=busy?`Running: ${PN[busy]}`:'No Processes Running';if(!P){p.innerHTML='<div class="em">No project open.</div>';return}
+if(!selP||!PN[selP]||(view==='sim')!==['bchk','sim'].includes(selP))selP=view==='sim'?'sim':'chk';
+const L=(lv,k,txt,grp)=>{const r=E('div','tr'+(k===selP?' sel':''));r.style.paddingLeft=4+lv*16+'px';const ic={ok:'✔',err:'✖',info:'ⓘ',run:'⟳'}[pstat[k]]||'';r.innerHTML=`<s class="tg">${grp?(collapsed['g'+k]?'+':'−'):''}</s><u class="ic g"></u><span class="st ${pstat[k]||''}">${ic}</span><span>${esc(txt)}</span>`;
+if(grp)r.querySelector('.tg').onclick=e=>{e.stopPropagation();collapsed['g'+k]=!collapsed['g'+k];renderProcs()};else{r.onclick=()=>{selP=k;renderProcs()};r.ondblclick=()=>runProc(k)}p.append(r)};
+(view==='sim'?PS:PI).forEach(x=>{if(Array.isArray(x[1])){L(0,x[0],x[0],1);if(!collapsed['g'+x[0]])x[1].forEach(y=>L(1,y[0],y[1]))}else L(0,x[0],x[1])})}
+function runProc(k){if(!P||busy)return;selP=k;pstat[k]='run';busy=k;renderProcs();
+timer=setTimeout(()=>{timer=null;const fin=(st)=>{pstat[k]=st;busy=null;renderProcs();renderGuide()};
+if(k==='vds'||k==='ds'){fin('ok');A.psum();return}
+if(['chk','bchk','sim'].includes(k)){const f=k==='chk'?(sel&&sel.type==='design'?sel:firstOf('design')):(sel&&sel.type==='tb'?sel:firstOf('tb'));
+if(!f){log('ERROR',k==='chk'?'No Verilog design source in the project.':'No Verilog test fixture in the project. Create one with New Source.');fin('err');return}
+const r=build(f,k!=='chk');if(!r){fin('err');return}
+if(k!=='sim'){log('INFO',`${PN[k]} completed successfully for ${f.name}.`);fin('ok');return}
+log('INFO','Behavioral simulation started.');busy=k;LB=r;S=r.sim;openISim(st=>{simDone=1;if(st==='err')fin('err');else{log('INFO','Simulation completed successfully.');fin('ok')}});return}
+log('INFO',`'${PN[k]}' is not implemented in the browser simulator; no result was produced.`);fin('info')},350)}
+function build(f,all){const mods={};let ok=1;for(const g of P.files){if(g.type==='doc'||(!all&&g.type!=='design'))continue;try{parse(g.text,g.name).forEach(m=>{if(mods[m.name]&&mods[m.name].file!==g.name){log('ERROR',`Module '${m.name}' is defined in both ${mods[m.name].file} and ${g.name}. Remove or rename one.`,g.name,m.ln);ok=0}mods[m.name]=m})}catch(e){fail(e,g.name);ok=0}}
+if(!ok)return;try{const top=modOf(f);const sim=Sim(mods,top);sim.warn.forEach(w=>log('WARNING',`${f.name}: ${w}`));return{mods,top,sim}}catch(e){fail(e,f.name)}}
+/* view / render */
+function setView(v){view=v;$('#vi').checked=v==='impl';$('#vs').checked=v==='sim';if(P){const t=view==='sim'?firstOf('tb'):null;if(t&&!(sel&&sel.type==='tb'))sel=t;if(view==='impl'&&sel&&sel.type==='tb'){const d=firstOf('design');if(d)sel=d}}selP=null;renderAll()}
+$('#vi').onchange=()=>setView('impl');$('#vs').onchange=()=>setView('sim');$('#rbtn').onclick=()=>runProc(selP);
+function renderTb(){$$('#toolbar .tb').forEach(b=>b.classList.toggle('dis',NEEDP.has(b.dataset.k)&&!P||b.dataset.k==='stop'&&!busy))}
+function gtext(){if(!P)return'File ▸ New Project… Enter a name, Next, Next, Finish.';const D=P.files.filter(f=>f.type==='design'),Tf=P.files.filter(f=>f.type==='tb');
+if(!D.length)return'Right-click the project in Hierarchy ▸ New Source… ▸ Verilog Module ▸ Next ▸ enter module name and ports ▸ Next ▸ Finish.';
+if(!D.some(f=>/\bassign\b|\balways\b/.test(f.text)))return'Type the module logic (assign / always) from the lab manual into the editor.';
+if(D.some(f=>!isSaved(f)))return'Save the design: File ▸ Save (Ctrl+S).';
+if(!Tf.length)return'Right-click the module ▸ New Source… ▸ Verilog Test Fixture ▸ enter name ▸ Next ▸ Finish.';
+if(!Tf.some(f=>/\$finish/.test(f.text)&&isSaved(f)))return'Write the stimulus after the “Add stimulus here” comment, end with $finish; and save.';
+if(view!=='sim')return'In the Design panel, set View to Simulation.';
+if(!simDone)return'Double-click “Simulate Behavioral Model” in the Processes panel.';
+return'Inspect the waveform: click the wave area to place the cursor; use zoom and Run buttons.'}
+function renderGuide(){const g=$('#guide');g.style.display=guideOn?'block':'none';if(guideOn)g.innerHTML=`<b>Guided Practice</b> <span style="float:right;cursor:default" onclick="A.guide()">✕</span><br>Next: ${esc(gtext())}`}
+function renderAll(){setTitle();renderTabs();renderTree();renderProcs();renderTb();renderGuide();$('#st1').textContent=act?`${act.name}${P?'  –  '+P.name:''}`:'Ready'}
+/* ---------- wizards ---------- */
+const SETS=[['Evaluation Development Board',['None Specified']],['Product Category',['All','General Purpose']],['Family',['Spartan6','Spartan3E','Spartan3','Virtex5']],['Device',['XC6SLX9','XC6SLX16','XC3S500E']],['Package',['TQG144','CSG324','FG320']],['Speed',['-3','-2','-1L']],['Top-Level Source Type',['HDL']],['Synthesis Tool',['XST (VHDL/Verilog)']],['Simulator',['ISim (VHDL/Verilog)']],['Preferred Language',['Verilog','VHDL']],['Property Specification in Project File',['Store all values']],['Manual Compile Order',['false','true']],['VHDL Source Analysis Standard',['VHDL-200X','VHDL-93']],['Enable Message Filtering',['false','true']]];
+const defSet=()=>({'Evaluation Development Board':'None Specified','Product Category':'All',Family:'Spartan6',Device:'XC6SLX9',Package:'TQG144',Speed:'-3','Top-Level Source Type':'HDL','Synthesis Tool':'XST (VHDL/Verilog)',Simulator:'ISim (VHDL/Verilog)','Preferred Language':'Verilog','Property Specification in Project File':'Store all values','Manual Compile Order':'false','VHDL Source Analysis Standard':'VHDL-200X','Enable Message Filtering':'false'});
+const setTable=(el,set,ro)=>{el.innerHTML='<table>'+SETS.map(([k,o])=>`<tr><td>${k}</td><td><select data-k="${k}" ${ro||/Tool|Type|Simulator|Language/.test(k)&&k!=='Preferred Language'?'disabled':''}>${o.map(v=>`<option${set[k]===v?' selected':''}>${v}</option>`).join('')}</select></td></tr>`).join('')+'</table>';el.querySelectorAll('select').forEach(s=>s.onchange=()=>set[s.dataset.k]=s.value)};
+function wizNP(){const go=()=>{const x=dlg('New Project Wizard',640);let st=1;const d={name:'Digital_Lab',loc:'C:\\Xilinx\\Projects',desc:'',set:defSet()};
+function show(){x.f.innerHTML='';if(st===1){x.b.innerHTML=`<h3>Create New Project</h3>Specify project location and type.<fieldset style="margin-top:8px"><legend>Enter a name, location, and comment for the project</legend><table><tr><td>Name:</td><td><input type="text" id="n1" value="${esc(d.name)}"></td></tr><tr><td>Location:</td><td><input type="text" id="n2" value="${esc(d.loc)}"></td></tr><tr><td>Description:</td><td><textarea rows="4" id="n3">${esc(d.desc)}</textarea></td></tr></table></fieldset><fieldset><legend>Select the type of top-level source for the project</legend><select disabled><option>HDL</option></select></fieldset><div style="color:#666">Browser note: files cannot be written to this folder. Use File ▸ Export Project Bundle to download your work.</div><div class="er" id="er"></div>`;
+x.btn('More Info',()=>{alert2('More Info','The project location is only a label; this educational app stores projects in memory and exports them as JSON.');return false});x.btn('Next >',()=>{d.name=$('#n1').value.trim();d.loc=$('#n2').value.trim();d.desc=$('#n3').value;if(!/^[A-Za-z_]\w*$/.test(d.name)){$('#er').textContent='Project name must start with a letter and contain only letters, digits and underscores.';return false}st=2;show();return false});x.btn('Cancel')}
+else if(st===2){x.b.innerHTML='<h3>Project Settings</h3>Specify device and project properties.<div id="tb" style="margin-top:6px"></div><div style="color:#666;margin-top:6px">Device fields are labels only: no FPGA synthesis or programming exists in this simulator.</div>';setTable($('#tb'),d.set);x.btn('More Info',()=>{alert2('More Info','Simulator is ISim and language Verilog for this lab.');return false});x.btn('< Back',()=>{st=1;show();return false});x.btn('Next >',()=>{st=3;show();return false});x.btn('Cancel')}
+else{x.b.innerHTML=`<h3>Project Summary</h3><pre>Project Navigator will create a new project with the following specifications:\n\nProject Name: ${esc(d.name)}\nProject Location: ${esc(d.loc)}\nTop-Level Source Type: HDL\nFamily: ${d.set.Family}\nDevice: ${d.set.Device}\nPackage: ${d.set.Package}\nSpeed: ${d.set.Speed}\nSimulator: ${d.set.Simulator}\nPreferred Language: ${d.set['Preferred Language']}</pre>`;x.btn('More Info',()=>{alert2('More Info','Click Finish to create the project.');return false});x.btn('< Back',()=>{st=2;show();return false});x.btn('Finish',()=>{P={app:'ise-edu',name:d.name,loc:d.loc,desc:d.desc,set:d.set,files:[],top:null};sel=act=null;open=[];ta.value='';edSync();$('#noed').style.display='block';pstat={};simDone=0;S=null;view='impl';$('#vi').checked=true;msgs=[];log('INFO',`Project '${d.name}' created.`);renderAll()});x.btn('Cancel')}}
+show()};if(P&&P.files.some(f=>!isSaved(f)))ask3('New Project','The current project has unsaved changes. Discard them?',go);else go()}
+function genMod(name,ports){return`\`timescale 1ns / 1ps\n//////////////////////////////////////////////////////////////////////////////////\n// Module Name:    ${name}\n// Created:        ${new Date().toLocaleString()}\n//////////////////////////////////////////////////////////////////////////////////\nmodule ${name}(${ports.length?'\n'+ports.map(p=>`    ${p.d} ${p.w>1?`[${p.w-1}:0] `:''}${p.n}`).join(',\n')+'\n    '+')':'\n    )'};\n\nendmodule\n`}
+function genTb(name,dutF){let ports=[],dm='';try{const M=parse(dutF.text,dutF.name)[0];dm=M.name;ports=M.ports.map(p=>({n:p,d:M.decl[p].dir,w:M.decl[p].w||1}))}catch(e){dm=modOf(dutF)}
+const w=p=>p.w>1?`[${p.w-1}:0] `:'',ins=ports.filter(p=>p.d==='input'),outs=ports.filter(p=>p.d!=='input');
+return`\`timescale 1ns / 1ps\n\nmodule ${name};\n\n    // Inputs\n${ins.map(p=>`    reg ${w(p)}${p.n};`).join('\n')}\n\n    // Outputs\n${outs.map(p=>`    wire ${w(p)}${p.n};`).join('\n')}\n\n    // Instantiate the Unit Under Test (UUT)\n    ${dm} uut (\n${ports.map(p=>`        .${p.n}(${p.n})`).join(',\n')}\n    );\n\n    initial begin\n        // Initialize Inputs\n${ins.map(p=>`        ${p.n} = 0;`).join('\n')}\n\n        // Wait 100 ns for global reset to finish\n        #100;\n\n        // Add stimulus here\n\n    end\n\nendmodule\n`}
+function wizNS(){if(!P){alert2('New Source','Create a project first.');return}
+const x=dlg('New Source Wizard',600),st={t:'mod',name:'',add:true,ports:[{n:'',d:'input',m:'',l:''}],dut:null,rep:false};let step=1;
+const fname=()=>st.t==='doc'?st.name:st.name.replace(/\.v$/,'')+'.v';
+function show(){x.f.innerHTML='';
+if(step===1){x.b.innerHTML=`<h3>Select Source Type</h3><table><tr><td style="width:55%;vertical-align:top"><div style="border:1px solid #888;background:#fff;padding:2px">${[['mod','Verilog Module'],['tb','Verilog Test Fixture'],['doc','User Document']].map(([k,l])=>`<label style="display:block;padding:2px"><input type="radio" name="t" value="${k}"${st.t===k?' checked':''}> ${l}</label>`).join('')}</div></td><td style="vertical-align:top">File name:<input type="text" id="fn" value="${esc(st.name)}"><br>Location:<input type="text" disabled value="${esc(P.loc)}\\${esc(P.name)}"><br><label><input type="checkbox" id="ad"${st.add?' checked':''}> Add to project</label></td></tr></table><div class="er" id="er"></div><div id="rp"></div>`;
+x.b.querySelectorAll('[name=t]').forEach(r=>r.onchange=()=>{st.t=r.value});
+x.btn('Cancel');x.btn('Next >',()=>{st.name=$('#fn').value.trim();st.add=$('#ad').checked;const n=st.name.replace(/\.v$/,'');if(!n||(st.t!=='doc'&&!/^[A-Za-z_]\w*$/.test(n))){$('#er').textContent='Enter a valid file name (letters, digits, underscore; not starting with a digit).';return false}
+if(P.files.some(f=>f.name===fname())&&!st.rep){$('#er').textContent=`A source named ${fname()} already exists.`;$('#rp').innerHTML='<label><input type="checkbox" id="rc"> Replace the existing file</label> (or edit the name)';$('#rc').onchange=e=>st.rep=e.target.checked;return false}
+if(st.t==='tb'&&!P.files.some(f=>f.type==='design')){$('#er').textContent='Add a Verilog module first: a test fixture needs a design to test.';return false}
+if(st.t==='tb'&&!st.dut)st.dut=(sel&&sel.type==='design'?sel:firstOf('design')).name;step=st.t==='doc'?3:2;show();return false})}
+else if(step===2&&st.t==='mod'){x.b.innerHTML=`<h3>Define Module</h3>Module name: <b>${esc(st.name.replace(/\.v$/,''))}</b><table id="pt"><tr><th>Port Name</th><th>Direction</th><th>Bus</th><th>MSB</th><th>LSB</th></tr>${st.ports.map((p,i)=>`<tr><td><input type="text" data-i="${i}" data-f="n" value="${esc(p.n)}"></td><td><select data-i="${i}" data-f="d">${['input','output','inout'].map(o=>`<option${p.d===o?' selected':''}>${o}</option>`).join('')}</select></td><td><input type="checkbox" data-i="${i}" data-f="b"${p.b?' checked':''}></td><td><input type="text" size="3" data-i="${i}" data-f="m" value="${esc(p.m)}"></td><td><input type="text" size="3" data-i="${i}" data-f="l" value="${esc(p.l)}"></td></tr>`).join('')}</table><button id="ap">Add Port</button><div class="er" id="er"></div>`;
+const rd=()=>x.b.querySelectorAll('[data-i]').forEach(e=>{const p=st.ports[e.dataset.i];p[e.dataset.f]=e.type==='checkbox'?e.checked:e.value});
+$('#ap').onclick=()=>{rd();st.ports.push({n:'',d:'input',m:'',l:''});show()};
+x.btn('Cancel');x.btn('< Back',()=>{rd();step=1;show();return false});x.btn('Next >',()=>{rd();const ns=st.ports.filter(p=>p.n.trim());if(new Set(ns.map(p=>p.n)).size!==ns.length||ns.some(p=>!/^[A-Za-z_]\w*$/.test(p.n))){$('#er').textContent='Port names must be unique, valid identifiers.';return false}step=3;show();return false})}
+else if(step===2){x.b.innerHTML=`<h3>Associate Source</h3>Select a source with which to associate the test fixture:<div style="border:1px solid #888;margin-top:6px">${P.files.filter(f=>f.type==='design').map(f=>`<label style="display:block;padding:2px"><input type="radio" name="d" value="${esc(f.name)}"${st.dut===f.name?' checked':''}> ${esc(modOf(f))} (${esc(f.name)})</label>`).join('')}</div>`;
+x.b.querySelectorAll('[name=d]').forEach(r=>r.onchange=()=>st.dut=r.value);x.btn('Cancel');x.btn('< Back',()=>{step=1;show();return false});x.btn('Next >',()=>{step=3;show();return false})}
+else{x.b.innerHTML=`<h3>Summary</h3><pre>Project Navigator will create a new skeleton source with the following specifications:\n\nSource Type: ${{mod:'Verilog Module',tb:'Verilog Test Fixture',doc:'User Document'}[st.t]}\nFile Name: ${esc(fname())}\nAdd to Project: ${st.add?'Yes':'No'}${st.t==='mod'?'\nPorts:\n'+st.ports.filter(p=>p.n).map(p=>'  '+p.d+' '+p.n+(p.b?`[${p.m}:${p.l}]`:'')).join('\n'):''}${st.t==='tb'?'\nAssociated source: '+esc(st.dut):''}</pre>`;
+x.btn('Cancel');x.btn('< Back',()=>{step=st.t==='doc'?1:2;show();return false});x.btn('Finish',()=>{const n=fname(),b=n.replace(/\.v$/,'');let text;
+if(st.t==='mod')text=genMod(b,st.ports.filter(p=>p.n.trim()).map(p=>({n:p.n.trim(),d:p.d,w:p.b?Math.abs((+p.m||0)-(+p.l||0))+1:1})));else if(st.t==='tb')text=genTb(b,P.files.find(f=>f.name===st.dut));else text='';
+const old=P.files.findIndex(f=>f.name===n);const f={name:n,text,saved:text,type:st.t==='doc'?'doc':st.t==='tb'?'tb':'design',dut:st.dut};if(old>=0)P.files.splice(old,1,f);else if(st.add)P.files.push(f);else{dl(n,text)}
+if(!P.top&&f.type==='design')P.top=n;log('INFO',`Source '${n}' created.`);if(st.add)openFile(f);else renderAll()})}}
+show()}
+function wizFind(rep){if(!act)return;const x=dlg(rep?'Find and Replace':'Find',380,0);x.b.innerHTML=`Find: <input type="text" id="f1"><br>${rep?'Replace with: <input type="text" id="f2"><br>':''}<span id="fr" style="color:#555"></span>`;
+const nxt=()=>{const q=$('#f1').value;if(!q)return;let i=ta.value.indexOf(q,ta.selectionEnd);if(i<0)i=ta.value.indexOf(q);if(i<0){$('#fr').textContent='Not found.';return}ta.focus();ta.setSelectionRange(i,i+q.length);edPos();$('#fr').textContent='';const v=ta.value.slice(0,i).split('\n').length;ta.scrollTop=Math.max(0,(v-4)*16)};
+x.btn('Close');x.btn('Find Next',()=>{nxt();return false});if(rep){x.btn('Replace',()=>{const q=$('#f1').value;if(ta.value.slice(ta.selectionStart,ta.selectionEnd)===q&&q){ta.focus();document.execCommand('insertText',false,$('#f2').value)}nxt();return false});x.btn('Replace All',()=>{const q=$('#f1').value;if(!q)return false;ta.focus();ta.select();document.execCommand('insertText',false,ta.value.split(q).join($('#f2').value));return false})}}
+function wizRef(){const x=dlg('Language Templates / Reference Code',620);let k=0;x.b.innerHTML='Experiment: <select id="rs">'+EXP.map((e,i)=>`<option value="${i}">${i+1}. ${e[0]}</option>`).join('')+'</select><pre id="rp"></pre><div style="color:#666">Reference code is a reconstruction; compare it with your lab manual. It is only inserted when you click a button below.</div>';
+const sh=()=>{k=+$('#rs').value;$('#rp').textContent=EXP[k][2]+'\n// ---- test fixture ----\n'+EXP[k][3]};$('#rs').onchange=sh;sh();
+x.btn('Close');x.btn('Insert at Cursor',()=>{if(!act)return alert2('Reference','Open a source first.');const t=act.type==='tb'?EXP[k][3]:EXP[k][2];ta.focus();document.execCommand('insertText',false,t)});
+x.btn('Replace Active Source',()=>{if(!act)return alert2('Reference','Open a source first.');const t=act.type==='tb'?EXP[k][3]:EXP[k][2];ask3('Replace Source',`Replace all text in ${esc(act.name)} with the reference ${act.type==='tb'?'test fixture':'module'}?`,()=>{ta.focus();ta.select();document.execCommand('insertText',false,t)})})}
+/* ---------- actions ---------- */
+const NEEDP=new Set('cp sv sa sall ex ns as pp psum vh top ren rm sp run rerun isim find repl goto closetab ref lt undo redo cut copy paste sela'.split(' '));
+const A={dis:k=>NEEDP.has(k)&&!P,
+np:wizNP,
+op:()=>pickFile('.json,.xise',t=>{try{const o=JSON.parse(t);if(o.app!=='ise-edu'||!o.files)throw 0;o.files.forEach(f=>f.saved=f.text);P=o;sel=act=null;open=[];ta.value='';edSync();$('#noed').style.display='block';pstat={};simDone=0;log('INFO',`Project '${P.name}' loaded.`);renderAll()}catch(e){alert2('Open Project','This is not a project bundle exported by this application.')}}),
+cp:()=>ask3('Close Project','Close the current project? Unsaved edits will be lost.',()=>{P=sel=act=null;open=[];ta.value='';edSync();$('#noed').style.display='block';renderAll()}),
+sv:()=>save(),sa:()=>{if(act)dl(act.name,act.text)},sall:()=>{P.files.forEach(f=>f.saved=f.text);log('INFO','All files saved.');renderAll()},
+ex:()=>{dl(P.name+'.json',JSON.stringify({app:'ise-edu',name:P.name,loc:P.loc,desc:P.desc,set:P.set,top:P.top,files:P.files.map(({name,text,type,dut})=>({name,text,type,dut}))},null,1));log('INFO','Project bundle exported.')},
+exit:()=>{const go=()=>{P=sel=act=null;open=[];renderAll();try{close()}catch(e){}};if(P&&P.files.some(f=>!isSaved(f)))ask3('Exit','There are unsaved changes. Exit anyway?',go);else go()},
+undo:()=>{ta.focus();document.execCommand('undo')},redo:()=>{ta.focus();document.execCommand('redo')},cut:()=>{ta.focus();document.execCommand('cut')},copy:()=>{ta.focus();document.execCommand('copy')},
+paste:()=>navigator.clipboard&&navigator.clipboard.readText().then(t=>{ta.focus();document.execCommand('insertText',false,t)}).catch(()=>alert2('Paste','Clipboard access was blocked. Use Ctrl+V.')),sela:()=>{ta.focus();ta.select()},
+find:()=>wizFind(0),repl:()=>wizFind(1),goto:()=>act&&ask('Go To Line','Line number:','1',v=>goLine(act.name,+v||1)),
+vi:()=>setView('impl'),vs:()=>setView('sim'),tsrc:()=>$('#left').classList.toggle('noh'),tproc:()=>$('#left').classList.toggle('nop'),tcon:()=>{const h=$('#con').style.display==='none';$('#con').style.display=h?'':'none';$('#sp3').style.display=h?'':'none'},
+rdl:()=>{['--lw','--ch','--ph'].forEach(v=>document.documentElement.style.removeProperty(v));$('#left').className='';$('#con').style.display='';$('#sp3').style.display=''},
+ns:()=>wizNS(),as:()=>pickFile('.v',(t,n)=>{const f={name:n,text:t,saved:t,type:/_tb\.v$|_tf\.v$/i.test(n)||(/\binitial\b/.test(t)&&!/\bassign\b/.test(t))?'tb':'design'};const i=P.files.findIndex(x=>x.name===n);if(i>=0)ask3('Add Source',`${esc(n)} already exists. Replace it?`,()=>{P.files[i]=f;openFile(f)});else{P.files.push(f);log('INFO',`Source '${n}' added.`);openFile(f)}}),
+pp:()=>{const x=dlg('Project Properties',560);x.b.innerHTML='<h3>Project Properties</h3><div id="tb"></div>';setTable($('#tb'),P.set);x.btn('Cancel');x.btn('OK',()=>{log('INFO','Project properties updated.');renderAll()})},
+psum:()=>alert2('Project Summary',`<b>${esc(P.name)}</b><br>Location: ${esc(P.loc)}<br>Device: ${devStr()}<br>Simulator: ISim<br>Language: Verilog<br>Design sources: ${P.files.filter(f=>f.type==='design').length}<br>Test fixtures: ${P.files.filter(f=>f.type==='tb').length}<br>Top module: ${esc(P.top||'(none)')}<br><br>No synthesis or implementation reports exist: those tools are not implemented.`),
+vh:()=>{if(sel&&sel.type!==undefined)openFile(sel);else if(P.files[0])openFile(P.files[0])},top:()=>{if(sel&&sel.type==='design'){P.top=sel.name;log('INFO',`'${sel.name}' set as top module.`);renderAll()}else alert2('Set as Top Module','Select a design source first.')},
+ren:()=>sel&&ask('Rename Source','New file name:',sel.name,v=>{v=v.trim();if(!v||P.files.some(f=>f!==sel&&f.name===v))return alert2('Rename','Invalid or duplicate name.');log('INFO',`Renamed '${sel.name}' to '${v}'.`);sel.name=v;renderAll()}),
+rm:()=>sel&&ask3('Remove Source',`Remove ${esc(sel.name)} from the project?`,()=>{const f=sel;P.files=P.files.filter(x=>x!==f);open=open.filter(x=>x!==f);if(act===f){act=open[0]||null;ta.value=act?act.text:'';if(!act)$('#noed').style.display='block';edSync()}sel=null;log('INFO',`Removed '${f.name}'.`);renderAll()}),
+sp:()=>sel&&alert2('Source Properties',`Name: ${esc(sel.name)}<br>Type: ${sel.type}<br>Module: ${esc(modOf(sel))}<br>Lines: ${sel.text.split('\n').length}<br>Modified: ${isSaved(sel)?'no':'yes'}`),
+run:()=>runProc(selP),rerun:()=>{pstat={};runProc(selP)},stop:()=>{if(busy){clearTimeout(timer);const k=busy;busy=null;pstat[k]='info';stopF=1;log('INFO','Process stopped by user.');renderAll()}else stopF=1},
+prp:()=>alert2('Process Properties','Properties for synthesis and implementation are not available. The simulator has no configurable process properties.'),
+isim:()=>{if(S)openISim();else alert2('ISim','Run “Simulate Behavioral Model” (Simulation view) first.')},
+lt:wizRef,ref:wizRef,closetab:()=>act&&closeTab(act),help:()=>alert2('Help Topics','<b>Lab workflow:</b><br>1. File ▸ New Project.<br>2. Right-click project ▸ New Source ▸ Verilog Module.<br>3. Type the logic, Save.<br>4. New Source ▸ Verilog Test Fixture; write stimulus, Save.<br>5. View ▸ Simulation; double-click Simulate Behavioral Model.<br>6. Inspect the waveform in ISim.'),
+about:()=>alert2('About','Educational recreation of the Xilinx ISE 14.7 Project Navigator and ISim for practising Verilog lab experiments. It is not official Xilinx software and has no real synthesis, implementation, FPGA programming or full Verilog support.'),
+guide:()=>{guideOn=!guideOn;renderGuide()}};
+mkMenu($('#menubar'),{File:[['New Project…','np'],['Open Project…','op'],['Close Project','cp'],0,['Save','sv','Ctrl+S'],['Save As… (download .v)','sa'],['Save All','sall'],['Export Project Bundle','ex'],0,['Exit','exit']],
+Edit:[['Undo','undo','Ctrl+Z'],['Redo','redo','Ctrl+Y'],0,['Cut','cut'],['Copy','copy'],['Paste','paste'],['Select All','sela'],0,['Find…','find','Ctrl+F'],['Replace…','repl','Ctrl+H'],['Go To Line…','goto','Ctrl+G']],
+View:[['Implementation','vi'],['Simulation','vs'],0,['Sources','tsrc'],['Processes','tproc'],['Console','tcon'],0,['Restore Default Layout','rdl']],
+Project:[['New Source…','ns'],['Add Source…','as'],['Add Copy of Source…','as'],0,['Project Properties…','pp'],['Project Summary','psum'],['Reference Code…','ref']],
+Source:[['New Source…','ns'],['View HDL Source','vh'],['Set as Top Module','top'],['Rename…','ren'],['Remove from Project','rm'],['Source Properties','sp']],
+Process:[['Run','run'],['Rerun All','rerun'],['Stop','stop'],['Process Properties…','prp']],
+Tools:[['Verilog Editor','vh'],['ISim Simulator','isim'],['Language Templates…','lt'],['Project Settings…','pp']],
+Window:[['Close Active Window','closetab'],['ISim Simulator Window','isim']],
+Help:[['Help Topics','help'],['About ISE Project Navigator','about'],['About This Educational Simulator','about'],['Guided Practice (on/off)','guide']]},A);
+[['np','▣','New Project'],['op','▤','Open Project'],['sv','▥','Save'],0,['ns','✚','New Source'],['find','⌕','Find'],0,['undo','↶','Undo'],['redo','↷','Redo'],0,['run','▶','Run Process'],['stop','■','Stop Process'],['isim','◉','View Simulation']].forEach(t=>{if(!t){$('#toolbar').append(E('span','sepv'));return}const b=E('button','tb',t[1]);b.title=t[2];b.dataset.k=t[0];b.style.color=t[0]==='run'?'#1a9a1a':t[0]==='stop'?'#c00':'';b.onclick=()=>A[t[0]]();$('#toolbar').append(b)});
+$('#top').addEventListener('contextmenu',e=>{if(e.target.closest('#hier')&&e.target.id==='hier'&&P)ctx(e,[['New Source…',wizNS],['Add Source…',A.as]])});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){const o=$$('.ov');if(o.length)o[o.length-1].remove()}if(!e.ctrlKey||!P)return;const k=e.key.toLowerCase();if(k==='s'){e.preventDefault();A.sv()}else if(k==='f'){e.preventDefault();A.find()}else if(k==='h'){e.preventDefault();A.repl()}else if(k==='g'){e.preventDefault();A.goto()}});
+/* splitters */
+const sv=(v,p)=>document.documentElement.style.setProperty(v,p+'px'),dr=(el,fn)=>el.onmousedown=e=>{e.preventDefault();const up=()=>{removeEventListener('mousemove',fn);removeEventListener('mouseup',up)};addEventListener('mousemove',fn);addEventListener('mouseup',up)};
+dr($('#sp1'),e=>sv('--lw',Math.max(160,Math.min(innerWidth-300,e.clientX))));dr($('#sp3'),e=>sv('--ch',Math.max(50,Math.min(innerHeight-260,innerHeight-22-e.clientY))));
+dr($('#sp2'),e=>{const r=$('#left').getBoundingClientRect();sv('--ph',Math.max(60,Math.min(r.height-170,r.bottom-e.clientY-26)))});
+/* ---------- ISim ---------- */
+let ppn=5,t0=0,cur=0,wl=[],selR=-1,instN=null;
+const vat=(n,t)=>{const h=n.h;let lo=0,hi=h.length-1;while(lo<hi){const m=(lo+hi+1)>>1;if(h[m][0]<=t)lo=m;else hi=m-1}return h[lo][1]},fv=(n,v)=>v===null?'X':n.w>1?v.toString(2).padStart(n.w,'0'):String(v);
+const ilog=t=>{const d=E('div','',esc(t));$('#ibody2').append(d);$('#ibody2').scrollTop=1e9};
+function allNets(n,o=[]){Object.values(n.nets).forEach(x=>{if(!o.includes(x))o.push(x)});n.kids.forEach(k=>allNets(k,o));return o}
+function openISim(cb){$('#isim').style.display='flex';$('#ibody2').innerHTML='';ilog('This is a behavioral-model simulator (educational recreation of ISim).');ilog('Simulator is doing circuit initialization process.');ilog('Finished circuit initialization process.');S.warn.forEach(w=>ilog('WARNING: '+w));
+wl=Object.keys(S.root.nets).map(k=>S.root.nets[k]);wl.forEach((n,i)=>n.label=Object.keys(S.root.nets)[i]);selR=-1;cur=0;t0=0;instN=S.root;iTree();iRender();
+runTo(1e5,st=>{fit();cb&&cb(st)})}
+function iTree(){const t=$('#itree');t.innerHTML='';const R=(n,lv)=>{const r=E('div','tr'+(n===instN?' sel':''),`<s class="tg"></s><u class="ic v"></u><span>${esc(n.n)}${n.mod&&lv?' ('+esc(n.mod)+')':''}</span>`);r.style.paddingLeft=4+lv*14+'px';r.onclick=()=>{instN=n;iTree()};t.append(r);n.kids.forEach(k=>R(k,lv+1))};R(S.root,0);
+const o=$('#iobj');o.innerHTML='';Object.keys(instN.nets).forEach(k=>{const n=instN.nets[k],r=E('div','tr',`<span style="width:70px">${esc(k)}</span><span style="width:60px">${esc(fv(n,vat(n,cur)))}</span><span>${n.reg?'Reg':'Wire'}</span>`);if(!n.label)n.label=k;r.ondblclick=()=>{if(!wl.includes(n)){wl.push(n);iRender()}};r.oncontextmenu=e=>ctx(e,[['Add To Waveform',()=>{if(!wl.includes(n)){wl.push(n);iRender()}}]]);o.append(r)})}
+function iRender(){const wn=$('#wn'),wv=$('#wv');wn.innerHTML='<div class="wr h">Name</div>';wv.innerHTML='<div class="wr h">Value</div>';
+wl.forEach((n,k)=>{const a=E('div','wr'+(k===selR?' sel':''),esc(n.label||n.name));a.onclick=()=>{selR=k;iRender()};a.oncontextmenu=e=>{selR=k;ctx(e,[['Remove',I.rem],['Move Up',I.up],['Move Down',I.dn]])};wn.append(a);wv.append(E('div','wr'+(k===selR?' sel':'')))});updVals();draw()}
+function updVals(){$('#wv').querySelectorAll('.wr:not(.h)').forEach((d,k)=>d.textContent=fv(wl[k],vat(wl[k],cur)));$('#wst').textContent=`X1: ${cur} ns    Sim Time: ${S.t} ns${S.fin?'   ($finish reached)':''}`;
+const g={};Object.keys(S.root.nets).forEach(k=>g[k]=S.root.nets[k]);const sg=$('#seg');if('abcdefg'.split('').every(k=>g[k])){sg.style.display='block';const R=[['a',10,2,40,8],['b',50,10,8,38],['c',50,52,8,38],['d',10,90,40,8],['e',2,52,8,38],['f',2,10,8,38],['g',10,46,40,8]];sg.innerHTML=`Seven-segment preview @ ${cur} ns<br><svg viewBox="0 0 60 100" width="60" height="100" style="background:#200">${R.map(([k,x,y,w,h])=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${vat(g[k],cur)===1?'#f33':'#401010'}"/>`).join('')}</svg>`}
+const o=$('#iobj');if(instN)iTree()}
+function fit(){const W=$('#cv').clientWidth;ppn=Math.max(.01,(W-30)/Math.max(S.t,1));t0=0;sc();draw()}
+function sc(){const r=$('#wsc'),W=$('#cv').clientWidth;r.max=Math.max(0,Math.ceil(S.t-W/ppn));r.value=t0}
+$('#wsc').oninput=e=>{t0=+e.target.value;draw()};
+function draw(){const c=$('#cv'),g=c.getContext('2d');c.width=c.clientWidth;c.height=c.clientHeight;const W=c.width,X=t=>(t-t0)*ppn;g.fillStyle='#000';g.fillRect(0,0,W,c.height);
+let st=1;for(const q of [1,2,5,10,20,50,100,200,500,1000,2000,5000,1e4,2e4,5e4,1e5]){st=q;if(q*ppn>=70)break}g.font='11px Tahoma';g.textBaseline='top';
+for(let t=Math.ceil(t0/st)*st;X(t)<W;t+=st){const x=Math.round(X(t))+.5;g.strokeStyle='#2c2c2c';g.beginPath();g.moveTo(x,24);g.lineTo(x,c.height);g.stroke();g.strokeStyle='#999';g.beginPath();g.moveTo(x,14);g.lineTo(x,24);g.stroke();g.fillStyle='#ddd';g.fillText(t+' ns',x+3,3)}
+wl.forEach((n,k)=>{const y=24+k*20,hi=y+3,lo=y+17,mid=y+10,h=n.h;if(k===selR){g.fillStyle='#14202e';g.fillRect(0,y,W,20)}
+for(let i=0;i<h.length;i++){const a=h[i][0],b=i+1<h.length?h[i+1][0]:S.t,v=h[i][1];if(b<t0||a>t0+W/ppn)continue;const x1=X(a),x2=X(b);g.strokeStyle=v===null?'#f33':'#0f0';g.fillStyle='#0f0';g.beginPath();
+if(n.w===1){const yy=v===null?mid:v?hi:lo;g.moveTo(x1,yy);g.lineTo(x2,yy);if(i+1<h.length){const v2=h[i+1][1];g.lineTo(x2,v2===null?mid:v2?hi:lo)}g.stroke()}
+else if(x2-x1>=1){g.moveTo(x1,mid);g.lineTo(x1+3,hi);g.lineTo(x2-3,hi);g.lineTo(x2,mid);g.lineTo(x2-3,lo);g.lineTo(x1+3,lo);g.closePath();g.stroke();if(x2-x1>30){g.fillStyle=v===null?'#f66':'#fff';g.textBaseline='middle';g.fillText(fv(n,v),Math.max(x1,0)+6,mid);g.textBaseline='top'}}}});
+const cx=X(cur);g.strokeStyle='#ff0';g.beginPath();g.moveTo(cx+.5,0);g.lineTo(cx+.5,c.height);g.stroke();g.fillStyle='#ff0';g.fillRect(cx+1,0,60,13);g.fillStyle='#000';g.fillText(cur+' ns',cx+4,1)}
+(()=>{const c=$('#cv');const mv=e=>{const r=c.getBoundingClientRect();cur=Math.max(0,Math.min(Math.round(t0+(e.clientX-r.left)/ppn),Math.ceil(S.t)));updVals();draw()};c.onmousedown=e=>{mv(e);const up=()=>{removeEventListener('mousemove',mv);removeEventListener('mouseup',up)};addEventListener('mousemove',mv);addEventListener('mouseup',up)};
+c.onwheel=e=>{e.preventDefault();if(e.ctrlKey)I.zi(e.deltaY>0?-1:1);else{t0=Math.max(0,Math.min(+$('#wsc').max,t0+e.deltaY/ppn));$('#wsc').value=t0;draw()}};new ResizeObserver(()=>{if(S)draw()}).observe(c)})();
+function runTo(lim,cb){if(S.fin){ilog('Simulation has finished. Use Restart to run again.');return}stopF=0;
+const go=()=>{let r;try{r=S.step(lim)}catch(e){ilog('ERROR: '+(e.msg||e));log('ERROR','Simulation error: '+(e.msg||e),e.file,e.line);iRender();cb&&cb('err');return}
+if(r==='more'&&!stopF){setTimeout(go,0);return}
+if(stopF)ilog(`Simulation stopped at ${S.t} ns.`);else if(r==='fin')ilog(`$finish called at time : ${S.t} ns`);else if(r==='idle')ilog(`No more events at ${S.t} ns.`);else if(lim>=1e5)ilog('Run All reached the safe limit of 100000 ns without $finish.');
+sc();iRender();cb&&cb(r)};go()}
+const I={all:()=>runTo(1e5,()=>{fit()}),for:()=>runTo(S.t+(+$('#rf').value||100),()=>{}),to:()=>ask('Run to Time','Run until time (ns):',String(S.t+100),v=>{if(+v>S.t)runTo(+v,()=>{});else ilog('Target time must be greater than the current time.')}),
+rs:()=>{try{S=Sim(LB.mods,LB.top)}catch(e){ilog('ERROR: '+e.msg);return}wl=Object.keys(S.root.nets).map(k=>{const n=S.root.nets[k];n.label=k;return n});instN=S.root;cur=0;t0=0;selR=-1;ilog('Simulation restarted at 0 ns.');iTree();iRender();sc()},
+stop:()=>{stopF=1},zi:d=>{ppn*=(d===-1?.5:2);sc();draw()},zo:()=>{ppn=Math.max(.01,ppn/2);sc();draw()},zf:()=>fit(),
+add:()=>{allNets(instN).forEach(n=>{if(!wl.includes(n)){if(!n.label)n.label=n.name;wl.push(n)}});iRender()},
+rem:()=>{if(selR>=0){wl.splice(selR,1);selR=-1;iRender()}},up:()=>{if(selR>0){[wl[selR-1],wl[selR]]=[wl[selR],wl[selR-1]];selR--;iRender()}},dn:()=>{if(selR>=0&&selR<wl.length-1){[wl[selR+1],wl[selR]]=[wl[selR],wl[selR+1]];selR++;iRender()}},
+pc:()=>{const ts=[...new Set(wl.flatMap(n=>n.h.map(x=>x[0])))].filter(t=>t<cur).sort((a,b)=>a-b);cur=ts.length?ts[ts.length-1]:0;updVals();draw()},
+nc:()=>{const ts=[...new Set(wl.flatMap(n=>n.h.map(x=>x[0])))].filter(t=>t>cur).sort((a,b)=>a-b);cur=ts.length?ts[0]:cur;updVals();draw()},
+close:()=>{$('#isim').style.display='none';renderAll()},about:()=>A.about()};
+$('#iclose').onclick=I.close;
+mkMenu($('#imenu'),{File:[['Close Simulation','close']],Simulation:[['Run All','all'],['Run to Time…','to'],['Restart','rs'],['Stop','stop']],View:[['Zoom In','zi'],['Zoom Out','zo'],['Zoom to Full View','zf']],Window:[['Project Navigator','close']],Help:[['About ISim (Educational)','about']]},I);
+[['all','▶▶','Run All'],['for','▶','Run For (time in box)'],['to','⏭','Run to Time'],['rs','⟲','Restart'],['stop','■','Stop'],0,['zi','＋','Zoom In'],['zo','－','Zoom Out'],['zf','⤢','Zoom to Fit'],0,['add','⊕','Add Signals (all in selected instance)'],['rem','⊖','Remove Selected Signal'],['up','▲','Move Signal Up'],['dn','▼','Move Signal Down'],0,['pc','◂','Previous Transition'],['nc','▸','Next Transition']].forEach(t=>{if(!t){$('#itool').append(E('span','sepv'));return}const b=E('button','tb',t[1]);b.title=t[2];b.onclick=()=>I[t[0]]();$('#itool').append(b);if(t[0]==='for'){const i=E('input');i.id='rf';i.value='100';i.size=4;i.title='Run For (ns)';$('#itool').append(i,E('span','',' ns'))}});
+setTitle();renderAll();edSync();renderCon();
+</script></body></html>
