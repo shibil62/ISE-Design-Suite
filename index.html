@@ -72,6 +72,9 @@ button{font:12px Tahoma,Arial,sans-serif}
 #wc{flex:1;position:relative}#cv{position:absolute;inset:0;width:100%;height:100%}
 #icon{height:130px;display:flex;flex-direction:column;border-top:1px solid #888}
 #seg{display:none;padding:6px;text-align:center}
+.wm{font-family:'SF Pro Text','SF Pro Display',-apple-system,Arial,sans-serif;font-size:11px;letter-spacing:.3px;color:#666;white-space:nowrap;pointer-events:none;user-select:none}
+#st1{margin-right:auto}#st2{margin-right:18px}
+#ctabs .wm{margin-left:auto;border-right:0;padding:3px 10px;background:none;font-weight:400}
 </style></head><body>
 <div id="title"><span id="tt"></span><span class="wb"><b>–</b><b>▢</b><b>✕</b></span></div>
 <div class="mbar" id="menubar"></div><div class="tbar" id="toolbar"></div>
@@ -86,7 +89,7 @@ button{font:12px Tahoma,Arial,sans-serif}
 </div><div class="sp" id="sp3"></div>
 <div id="con"><div class="chd"><span>Console</span><span><button id="cclr">Clear Console</button><button id="ccp">Copy Console</button><button id="clat">Scroll to Latest</button></span></div><div id="cbody"></div>
 <div id="ctabs"><span>Console</span><span>Errors</span><span>Warnings</span><span>Information</span></div></div></div>
-<div id="status"><span id="st1">Ready</span><span id="st2">Ln 1 Col 1 &nbsp; Verilog</span></div>
+<div id="status"><span id="st1">Ready</span><span id="st2">Ln 1 Col 1 &nbsp; Verilog</span><span class="wm">Created by Shibil P A &middot; 2026</span></div>
 <div id="ctx"><div class="dd" id="ctxd" style="position:static"></div></div>
 <div id="guide"></div>
 <div id="isim"><div id="ititle"><span>ISim (P.20131013) - [Default.wcfg*]</span><button id="iclose" title="Close ISim and return to Project Navigator">✕</button></div>
@@ -94,7 +97,7 @@ button{font:12px Tahoma,Arial,sans-serif}
 <div id="ib"><div id="iside"><div class="ph">Instances and Processes</div><div id="itree" class="box"></div><div class="ph">Objects</div><div id="iobj" class="box"></div><div id="seg"></div></div>
 <div id="iwave"><div id="wrow"><div id="wn"></div><div id="wv"></div><div id="wc"><canvas id="cv"></canvas></div></div>
 <input type="range" id="wsc" min="0" max="100" value="0" style="width:100%;margin:0"><div id="wst" style="padding:2px 8px"></div></div></div>
-<div id="icon"><div id="ibody2"></div><div id="ctabs"><span class="on">Console</span></div></div></div>
+<div id="icon"><div id="ibody2"></div><div id="ctabs"><span class="on">Console</span><span class="wm">Created by Shibil P A &middot; 2026</span></div></div></div>
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const E=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
